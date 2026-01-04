@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-grid me-2 text-primary"></i>{{ _('Browse Events') }}</h2>
+        <p class="text-muted mb-0">{{ _('Discover upcoming campus events') }}</p>
+    </div>
+    {% if current_user.is_authenticated and current_user.can_create_events() %}
+    <a href="{{ url_for('events.create_event') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>{{ _('Create Event') }}
+    </a>
+    {% endif %}
+</div>
+
+<!-- Filters -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body py-3">
+        <form method="GET" action="{{ url_for('events.list_events') }}" class="row g-3">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" name="q" class="form-control" placeholder="{{ _('Search events...') }}"
+                        value="{{ search_query }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-select">
+                    <option value="">{{ _('All Categories') }}</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if current_category==cat.id %}selected{% endif %}>
+                        {{ cat.get_name(current_language) }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel me-2"></i>{{ _('Filter') }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Events Grid -->
+{% if events.items %}
+<div class="row g-4">
+    {% for event in events.items %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card event-card h-100 shadow-sm border-0 hover-lift">
+            <div class="card-img-top event-image"
+                style="background: linear-gradient(135deg, {{ event.category.color if event.category else '#007bff' }}20, {{ event.category.color if event.category else '#007bff' }}40);">
+                <div class="event-date-badge">
+                    <span class="day">{{ event.start_date.strftime('%d') }}</span>
+                    <span class="month">{{ event.start_date.strftime('%b') }}</span>
+                </div>
+                {% if event.category %}
+                <span class="category-badge" style="background: {{ event.category.color }};">
+                    <i class="{{ event.category.icon }} me-1"></i>{{ event.category.get_name(current_language) }}
+                </span>
+                {% endif %}
+            </div>
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">
+                    <a href="{{ url_for('events.event_detail', event_id=event.id) }}"
+                        class="text-decoration-none text-dark stretched-link">
+                        {{ event.title }}
+                    </a>
+                </h5>
+
+                <p class="card-text text-muted small flex-grow-1">
+                    {{ event.description[:80] + '...' if event.description and event.description|length > 80 else
+                    event.description or '' }}
+                </p>
+
+                <div class="event-meta mt-auto pt-3 border-top">
+                    <div class="d-flex justify-content-between small text-muted">
+                        <span><i class="bi bi-geo-alt me-1"></i>{{ event.venue[:15] }}{% if event.venue|length > 15
+                            %}...{% endif %}</span>
+                        <span><i class="bi bi-clock me-1"></i>{{ event.start_date.strftime('%H:%M') }}</span>
+                    </div>
+                    {% if event.max_attendees > 0 %}
+                    <div class="mt-2">
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar"
+                                style="width: {{ (event.registration_count / event.max_attendees * 100)|int }}%; background: {{ event.category.color if event.category else '#007bff' }};">
+                            </div>
+                        </div>
+                        <small class="text-muted">{{ event.spots_left }} {{ _('spots left') }}</small>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if events.pages > 1 %}
+<nav class="mt-5">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if not events.has_prev %}disabled{% endif %}">
+            <a class="page-link"
+                href="{{ url_for('events.list_events', page=events.prev_num, category=current_category, q=search_query) }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% for page in events.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page %}
+        <li class="page-item {% if page == events.page %}active{% endif %}">
+            <a class="page-link"
+                href="{{ url_for('events.list_events', page=page, category=current_category, q=search_query) }}">{{ page
+                }}</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">…</span></li>
+        {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not events.has_next %}disabled{% endif %}">
+            <a class="page-link"
+                href="{{ url_for('events.list_events', page=events.next_num, category=current_category, q=search_query) }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-calendar-x display-1 text-muted"></i>
+    <h4 class="mt-3 text-muted">{{ _('No events found') }}</h4>
+    <p class="text-muted">
+        {% if search_query or current_category %}
+        {{ _('Try adjusting your filters.') }}
+        {% else %}
+        {{ _('Check back later for new events!') }}
+        {% endif %}
+    </p>
+</div>
+{% endif %}
+{% endblock %}

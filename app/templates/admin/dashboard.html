@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <h2><i class="bi bi-speedometer2 me-2 text-primary"></i>{{ _('Admin Dashboard') }}</h2>
+    <p class="text-muted">{{ _('System overview and management') }}</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-people text-primary fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">{{ total_users }}</h3>
+                        <small class="text-muted">{{ _('Total Users') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-calendar-event text-success fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">{{ total_events }}</h3>
+                        <small class="text-muted">{{ _('Total Events') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-info bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-calendar-check text-info fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">{{ upcoming_events }}</h3>
+                        <small class="text-muted">{{ _('Upcoming Events') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-ticket-perforated text-warning fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">{{ total_registrations }}</h3>
+                        <small class="text-muted">{{ _('Active Registrations') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>{{ _('Quick Actions') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('admin.users_list') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-people me-2"></i>{{ _('Manage Users') }}
+                    </a>
+                    <a href="{{ url_for('admin.events_list') }}" class="btn btn-outline-success">
+                        <i class="bi bi-calendar-event me-2"></i>{{ _('Manage Events') }}
+                    </a>
+                    <a href="{{ url_for('admin.categories_list') }}" class="btn btn-outline-info">
+                        <i class="bi bi-tags me-2"></i>{{ _('Manage Categories') }}
+                    </a>
+                    <a href="{{ url_for('admin.departments_list') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-building me-2"></i>{{ _('Manage Departments') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-pie-chart me-2"></i>{{ _('Users by Role') }}</h5>
+            </div>
+            <div class="card-body">
+                {% for role, count in users_by_role %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span
+                        class="badge bg-{{ 'danger' if role == 'admin' else 'success' if role == 'staff' else 'primary' }}">
+                        {{ role|capitalize }}
+                    </span>
+                    <span class="fw-bold">{{ count }}</span>
+                </div>
+                <div class="progress mb-3" style="height: 6px;">
+                    <div class="progress-bar bg-{{ 'danger' if role == 'admin' else 'success' if role == 'staff' else 'primary' }}"
+                        style="width: {{ (count / total_users * 100)|int if total_users > 0 else 0 }}%;"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Registrations -->
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>{{ _('Recent Registrations') }}</h5>
+        <span class="badge bg-primary">{{ recent_registrations|length }}</span>
+    </div>
+    <div class="card-body p-0">
+        {% if recent_registrations %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>{{ _('User') }}</th>
+                        <th>{{ _('Event') }}</th>
+                        <th>{{ _('Date') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reg in recent_registrations %}
+                    <tr>
+                        <td>
+                            <strong>{{ reg.user.full_name }}</strong>
+                            <div class="small text-muted">{{ reg.user.email }}</div>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('events.event_detail', event_id=reg.event.id) }}"
+                                class="text-decoration-none">
+                                {{ reg.event.title }}
+                            </a>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ reg.registered_at.strftime('%d %b %Y, %H:%M') }}</small>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-4 text-muted">
+            <i class="bi bi-inbox display-4"></i>
+            <p class="mt-2">{{ _('No recent registrations') }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
