@@ -19,6 +19,3 @@ WTForms==3.1.1
 
 # Utilities
 Babel==2.14.0
-
-# Production Server
-gunicorn==21.2.0

@@ -1,6 +1,6 @@
 # Multilingual Campus Event Management System
 
-A comprehensive web-based system for managing campus events at Nigerian universities with full multilingual support (English, Hausa, Yoruba, Igbo).
+A comprehensive web-based system for managing campus events at Lasustech with full multilingual support (English, Hausa, Yoruba, Igbo).
 
 ## Features
 
