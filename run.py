@@ -105,7 +105,7 @@ def seed_db():
         email='student@lasustech.edu.ng',
         full_name='Amina Yusuf',
         role='student',
-        matric_number='2021/12345',
+        matric_number='25010101010',
         department_id=1,
         preferred_language='ha'
     )
