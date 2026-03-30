@@ -233,3 +233,39 @@ class SavedEvent(db.Model):
     
     def __repr__(self):
         return f'<SavedEvent User:{self.user_id} Event:{self.event_id}>'
+
+
+class Notification(db.Model):
+    """Notification model for user notifications."""
+    __tablename__ = 'notifications'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Notification type: 'registration', 'new_event', 'event_update', etc.
+    type = db.Column(db.String(50), nullable=False)
+    
+    # Title and message
+    title = db.Column(db.String(200), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    
+    # Related event (optional)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
+    
+    # Related user who triggered the notification (optional)
+    triggered_by_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    
+    # Status
+    is_read = db.Column(db.Boolean, default=False)
+    
+    # Timestamps
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    read_at = db.Column(db.DateTime, nullable=True)
+    
+    # Relationships
+    user = db.relationship('User', foreign_keys=[user_id], backref='notifications')
+    event = db.relationship('Event', backref='notifications')
+    triggered_by = db.relationship('User', foreign_keys=[triggered_by_id])
+    
+    def __repr__(self):
+        return f'<Notification {self.id} for User:{self.user_id}>'

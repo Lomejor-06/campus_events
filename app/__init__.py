@@ -57,16 +57,48 @@ def create_app(config_class=Config):
     babel.init_app(app, locale_selector=get_locale)
     csrf.init_app(app)
     
+    # CORS support for React frontend
+    @app.after_request
+    def add_cors_headers(response):
+        origin = request.headers.get('Origin', '')
+        allowed_origins = ['http://localhost:5173', 'http://127.0.0.1:5173']
+        if origin in allowed_origins:
+            response.headers['Access-Control-Allow-Origin'] = origin
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        return response
+    
+    # Handle preflight requests
+    @app.before_request
+    def handle_preflight():
+        if request.method == 'OPTIONS':
+            from flask import make_response
+            response = make_response()
+            origin = request.headers.get('Origin', '')
+            allowed_origins = ['http://localhost:5173', 'http://127.0.0.1:5173']
+            if origin in allowed_origins:
+                response.headers['Access-Control-Allow-Origin'] = origin
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+            return response
+    
     # Register blueprints
     from app.routes.main import main_bp
     from app.routes.auth import auth_bp
     from app.routes.events import events_bp
     from app.routes.admin import admin_bp
+    from app.routes.api import api_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(events_bp, url_prefix='/events')
     app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(api_bp)  # API blueprint with /api prefix
+    
+    # Exempt API blueprint from CSRF for JSON requests
+    csrf.exempt(api_bp)
     
     # Context processors
     @app.context_processor

@@ -14,34 +14,52 @@ A comprehensive web-based system for managing campus events at Lasustech with fu
 
 ## Quick Start
 
-### 1. Install Python Dependencies
+To run the application, you need to set up both the backend (Flask) and the frontend (React).
+
+### 1. Backend Setup (Terminal 1)
+
+Initialize the Python environment and database:
 
 ```bash
 cd campus_events
+
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 2. Initialize and Seed Database
+# Initialize and Seed Database
+# Windows users:
+set FLASK_APP=run.py
+# Mac/Linux users:
+export FLASK_APP=run.py
 
-```bash
-# Set Flask app
-set FLASK_APP=run.py  # Windows
-export FLASK_APP=run.py  # Linux/Mac
-
-# Create database tables
 flask init-db
-
-# Add sample data
 flask seed-db
-```
 
-### 3. Run the Application
-
-```bash
+# Run the Backend Server
 python run.py
 ```
+The backend API will run on `http://127.0.0.1:5000`.
 
-Then open http://127.0.0.1:5000 in your browser.
+### 2. Frontend Setup (Terminal 2)
+
+In a new terminal window, start the React interface:
+
+```bash
+cd campus_events/frontend
+
+# Install Node dependencies
+npm install
+
+# Start the Development Server
+npm run dev
+```
+
+### 3. Access the App
+
+Open your browser and go to:
+👉 **http://localhost:5173**
+
+Use this URL to interact with the application. The Flask URL (port 5000) is used only for API calls.
 
 ## Test Accounts
 
@@ -51,33 +69,33 @@ Then open http://127.0.0.1:5000 in your browser.
 | Staff | staff@lasustech.edu.ng | staff123 |
 | Student | student@lasustech.edu.ng | student123 |
 
+
+## Technologies Used
+
+- **Backend**: Flask, Flask-SQLAlchemy, Flask-Login
+- **Frontend**: React, TypeScript, Vite, Bootstrap 5
+- **Database**: SQLite (development), PostgreSQL (production)
+- **i18n**: react-i18next for internationalization
+
 ## Project Structure
 
 ```
 campus_events/
-├── app/
+├── app/                  # Flask Backend
 │   ├── __init__.py       # App factory
-│   ├── config.py         # Configuration
 │   ├── models.py         # Database models
-│   ├── forms.py          # WTForms
-│   ├── routes/           # Blueprints
-│   │   ├── main.py       # Homepage, language
-│   │   ├── auth.py       # Login, register
-│   │   ├── events.py     # Event CRUD
-│   │   └── admin.py      # Admin panel
-│   ├── templates/        # Jinja2 templates
-│   └── static/           # CSS, JS, images
+│   └── routes/           # API Endpoints
+├── frontend/             # React Frontend
+│   ├── src/
+│   │   ├── components/   # Reusable UI components
+│   │   ├── pages/        # Route components (Pages)
+│   │   ├── context/      # React Conext (Auth, Notifications)
+│   │   └── services/     # API service layer
+│   └── public/           # Static assets
 ├── requirements.txt
 ├── run.py
 └── README.md
 ```
-
-## Technologies Used
-
-- **Backend**: Flask, Flask-SQLAlchemy, Flask-Login, Flask-Babel
-- **Database**: SQLite (development), PostgreSQL (production)
-- **Frontend**: Bootstrap 5, Jinja2, FullCalendar
-- **i18n**: Flask-Babel for internationalization
 
 ## Event Categories
 
@@ -92,4 +110,4 @@ campus_events/
 
 ## License
 
-This project is for educational purposes - Final Year Project.
+This project is for educational purposes - Final Year Project of ODUNLAMI OLUDAMILARE ISRAEL.
