@@ -1,113 +1,55 @@
-# Multilingual Campus Event Management System
+# 🏛️ LASUSTECH Campus Events Portal
 
-A comprehensive web-based system for managing campus events at Lasustech with full multilingual support (English, Hausa, Yoruba, Igbo).
+A sophisticated, institutional-grade campus management system designed for **Lagos State University of Science and Technology**. This portal streamlines event organization, student registrations, and administrative oversight through a high-performance, secure architecture.
 
-## Features
+## 🚀 Technical Architecture
 
-- 🌍 **Multilingual Support**: Switch between English, Hausa, Yoruba, and Igbo
-- 👥 **Role-Based Access**: Student, Staff, and Admin roles
-- 📅 **Event Management**: Create, edit, publish, and manage campus events
-- 🎫 **Registration System**: Easy event registration with capacity management
-- 📊 **Admin Dashboard**: Statistics and user management
-- 📱 **Responsive Design**: Works on desktop and mobile devices
-- 🗓️ **Calendar View**: Visual calendar with all events
+This application has been modernized from a Firebase architecture to a **Supabase + PostgreSQL** relational foundation, ensuring superior data integrity and institutional security standards.
 
-## Quick Start
+- **Frontend**: React 19 + TypeScript + Vite
+- **Backend**: Supabase (Auth & PostgreSQL)
+- **Styling**: Vanilla CSS (Institutional "Senior Dev" Design System)
+- **Internationalization**: i18next (Multi-language support)
+- **Scheduling**: FullCalendar Integration
 
-To run the application, you need to set up both the backend (Flask) and the frontend (React).
+## 🛡️ Security & Role System
 
-### 1. Backend Setup (Terminal 1)
+The portal implements strict **Row Level Security (RLS)** at the database layer to enforce institutional roles:
 
-Initialize the Python environment and database:
+- **Students**: Can view events, register for attendance, and manage their own profiles.
+- **Staff**: Can publish, edit, and manage campus events they create.
+- **Administrators**: Full system oversight, user record management, and analytics access.
 
-```bash
-cd campus_events
+## ⚙️ Project Setup
 
-# Install dependencies
-pip install -r requirements.txt
+### 1. Environment Configuration
+Create a `.env` file in the root directory with your Supabase credentials:
 
-# Initialize and Seed Database
-# Windows users:
-set FLASK_APP=run.py
-# Mac/Linux users:
-export FLASK_APP=run.py
-
-flask init-db
-flask seed-db
-
-# Run the Backend Server
-python run.py
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
-The backend API will run on `http://127.0.0.1:5000`.
 
-### 2. Frontend Setup (Terminal 2)
+### 2. Database Migration
+To set up the required relational schema and security policies:
+1. Open your **Supabase Dashboard**.
+2. Navigate to the **SQL Editor**.
+3. Copy and run the contents of [supabase_migration.sql](./supabase_migration.sql).
 
-In a new terminal window, start the React interface:
-
+### 3. Installation
 ```bash
-cd campus_events/frontend
-
-# Install Node dependencies
 npm install
-
-# Start the Development Server
 npm run dev
 ```
 
-### 3. Access the App
+## 📂 Project Structure
 
-Open your browser and go to:
-👉 **http://localhost:5173**
+- `src/services/`: Core logic for Supabase Auth and PostgREST interactions.
+- `src/contexts/`: Global state management for Authentication and Notifications.
+- `src/pages/admin/`: Institutional oversight and record management interfaces.
+- `src/locales/`: Multi-language string definitions.
 
-Use this URL to interact with the application. The Flask URL (port 5000) is used only for API calls.
+---
 
-## Test Accounts
-
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@lasustech.edu.ng | admin123 |
-| Staff | staff@lasustech.edu.ng | staff123 |
-| Student | student@lasustech.edu.ng | student123 |
-
-
-## Technologies Used
-
-- **Backend**: Flask, Flask-SQLAlchemy, Flask-Login
-- **Frontend**: React, TypeScript, Vite, Bootstrap 5
-- **Database**: SQLite (development), PostgreSQL (production)
-- **i18n**: react-i18next for internationalization
-
-## Project Structure
-
-```
-campus_events/
-├── app/                  # Flask Backend
-│   ├── __init__.py       # App factory
-│   ├── models.py         # Database models
-│   └── routes/           # API Endpoints
-├── frontend/             # React Frontend
-│   ├── src/
-│   │   ├── components/   # Reusable UI components
-│   │   ├── pages/        # Route components (Pages)
-│   │   ├── context/      # React Conext (Auth, Notifications)
-│   │   └── services/     # API service layer
-│   └── public/           # Static assets
-├── requirements.txt
-├── run.py
-└── README.md
-```
-
-## Event Categories
-
-| English | Hausa | Yoruba | Igbo |
-|---------|-------|--------|------|
-| Academic | Ilimi | Ẹ̀kọ́ | Mmụta |
-| Social | Zamantakewa | Àwùjọ | Mmekọrịta |
-| Sports | Wasanni | Eré-ìdárayá | Egwuregwu |
-| Cultural | Al'ada | Àṣà | Omenala |
-| Religious | Addini | Ẹ̀sìn | Okpukpe |
-| Career | Sana'a | Iṣẹ́ | Ọrụ |
-
-## License
-
-This project is for educational purposes - Final Year Project of ODUNLAMI OLUDAMILARE ISRAEL.
+> [!NOTE]
+> This portal is designed with a "Portal-First" aesthetic, prioritizing high information density and professional legibility over consumer-grade visual flair.

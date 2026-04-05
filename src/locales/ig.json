@@ -1,0 +1,174 @@
+{
+    "translation": {
+        "app": {
+            "title": "Mmemme Mahadum",
+            "description": "Ebe gị niile iji chọpụta na jikwaa mmemme mahadum."
+        },
+        "nav": {
+            "home": "Ụlọ",
+            "events": "Mmemme",
+            "calendar": "Kalenda",
+            "login": "Banye",
+            "register": "Debanye Aha",
+            "profile": "Profaịlụ M",
+            "savedEvents": "Mmemme Edebere",
+            "myEvents": "Mmemme M",
+            "createEvent": "Mepụta Mmemme",
+            "adminDashboard": "Dashboard Nchịkwa",
+            "logout": "Pụọ",
+            "notifications": "Ọkwa"
+        },
+        "home": {
+            "hero": {
+                "title": "Chọpụta Mmemme Mahadum",
+                "subtitle": "Chọta mmemme dị mma na-eme na mahadum",
+                "browseEvents": "Lelee Mmemme",
+                "viewCalendar": "Lelee Kalenda"
+            },
+            "upcomingEvents": "Mmemme Na-abịa",
+            "viewAll": "Hụ Niile"
+        },
+        "events": {
+            "title": "Lelee Mmemme",
+            "search": "Chọọ mmemme...",
+            "searchPlaceholder": "Chọọ site na aha ma ọ bụ nkọwa...",
+            "allCategories": "Ụdị Niile",
+            "noEvents": "Achọtaghị mmemme ọ bụla",
+            "register": "Debanye Aha",
+            "registerNow": "DEBANYE AHA UGBU A",
+            "registered": "Edebanye Aha",
+            "unregister": "Kagbuo Ndebanye Aha",
+            "save": "Chekwaa Mmemme",
+            "unsave": "Wepụ",
+            "saved": "Echekwara",
+            "full": "Mmemme Ejupụtara",
+            "spotsLeft": "{{count}} ebe fọdụrụ",
+            "unlimited": "Ebe enweghị njedebe",
+            "create": "Mepụta Mmemme",
+            "edit": "Dezie Mmemme",
+            "delete": "Hichapụ Mmemme",
+            "confirmDelete": "Ị jiri ike na-achọ ihichapụ mmemme a?",
+            "status": {
+                "draft": "Nchịkọta",
+                "published": "Ebipụtara",
+                "cancelled": "Akagbuola",
+                "completed": "Emechara"
+            }
+        },
+        "eventForm": {
+            "title": "Aha",
+            "description": "Nkọwa",
+            "category": "Ụdị",
+            "venue": "Ebe",
+            "startDate": "Ụbọchị Mmalite & Oge",
+            "endDate": "Ụbọchị Njedebe & Oge",
+            "maxAttendees": "Ọnụọgụ Kachasị (0 maka enweghị njedebe)",
+            "status": "Ọnọdụ",
+            "submit": "Chekwaa Mmemme",
+            "cancel": "Kagbuo"
+        },
+        "auth": {
+            "login": {
+                "title": "Banye",
+                "email": "Email",
+                "password": "Okwuntughe",
+                "rememberMe": "Cheta m",
+                "submit": "Banye",
+                "noAccount": "Ịnweghị akaụntụ?",
+                "register": "Debanye aha ebe a"
+            },
+            "register": {
+                "title": "Mepụta Akaụntụ",
+                "fullName": "Aha Zuru Oke",
+                "email": "Email",
+                "phone": "Nọmba Ekwentị",
+                "password": "Okwuntughe",
+                "confirmPassword": "Kwado Okwuntughe",
+                "matricNumber": "Nọmba Matrik",
+                "department": "Ngalaba",
+                "selectDepartment": "-- Họrọ Ngalaba --",
+                "preferredLanguage": "Asụsụ Ịchọrọ",
+                "submit": "Debanye Aha",
+                "hasAccount": "Ị nwere akaụntụ?",
+                "login": "Banye ebe a"
+            },
+            "profile": {
+                "title": "Profaịlụ M",
+                "update": "Melite Profaịlụ",
+                "staffId": "Nọmba Ndị Ọrụ",
+                "changePassword": "Gbanwee Okwuntughe",
+                "currentPassword": "Okwuntughe Ugbu a",
+                "newPassword": "Okwuntughe Ọhụrụ",
+                "confirmNewPassword": "Kwado Okwuntughe Ọhụrụ",
+                "upcomingRegistrations": "Ndebanye Aha Na-abịa"
+            }
+        },
+        "admin": {
+            "dashboard": "Dashboard Nchịkwa",
+            "users": "Ndị Ọrụ",
+            "events": "Mmemme",
+            "categories": "Ụdị",
+            "departments": "Ngalaba",
+            "registrations": "Ndebanye Aha",
+            "stats": {
+                "totalUsers": "Mkpokọta Ndị Ọrụ",
+                "totalEvents": "Mkpokọta Mmemme",
+                "totalRegistrations": "Mkpokọta Ndebanye Aha",
+                "upcomingEvents": "Mmemme Na-abịa"
+            }
+        },
+        "calendar": {
+            "title": "Kalenda Mmemme"
+        },
+        "about": {
+            "title": "Banyere Anyị"
+        },
+        "footer": {
+            "quickLinks": "Njikọ Ọsọ",
+            "browseEvents": "Lelee Mmemme",
+            "contact": "Kpọtụrụ Anyị",
+            "rights": "Ikike niile echekwara.",
+            "terms": "Usoro Ije Ozi",
+            "privacy": "Iwu Nzuzo"
+        },
+        "terms": {
+            "title": "Usoro Ije Ozi"
+        },
+        "privacy": {
+            "title": "Iwu Nzuzo"
+        },
+        "common": {
+            "all": "Niile",
+            "loading": "Na-ebu...",
+            "error": "Njehie mere",
+            "success": "Ọganihu!",
+            "save": "Chekwaa",
+            "cancel": "Kagbuo",
+            "delete": "Hichapụ",
+            "edit": "Dezie",
+            "view": "Lee",
+            "back": "Laghachi",
+            "submit": "Zipu"
+        },
+        "errors": {
+            "notFound": "Achọtaghị Peeji",
+            "notFoundMessage": "Peeji a ị na-achọ adịghị.",
+            "goHome": "Gaa Ụlọ"
+        },
+        "messages": {
+            "loginSuccess": "Nnọọ, {{name}}!",
+            "logoutSuccess": "Ị pụọla.",
+            "registerSuccess": "Ndebanye aha gara nke ọma! Biko banye.",
+            "profileUpdated": "Emelitela profaịlụ gị.",
+            "passwordChanged": "Agbanweela okwuntughe gị.",
+            "eventCreated": "Emepụtara mmemme nke ọma!",
+            "eventUpdated": "Emelitela mmemme nke ọma!",
+            "eventDeleted": "Ehichapụla mmemme nke ọma.",
+            "registeredForEvent": "A debanye gị aha maka mmemme a!",
+            "registeredSuccessfully": "A debanyela gị aha nke ọma maka mmemme a!",
+            "unregisteredFromEvent": "Akagbuola ndebanye aha gị.",
+            "eventSaved": "Echekwara mmemme!",
+            "eventUnsaved": "Ewepụrụ mmemme n'ime ndị echekwara."
+        }
+    }
+}

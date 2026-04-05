@@ -1,0 +1,174 @@
+{
+    "translation": {
+        "app": {
+            "title": "Àwọn Ìṣẹ̀lẹ̀ Ilé-Ẹ̀kọ́",
+            "description": "Ọ̀nà kan ṣoṣo láti ṣàwárí àti láti ṣàkóso àwọn ìṣẹ̀lẹ̀ ilé-ẹ̀kọ́."
+        },
+        "nav": {
+            "home": "Ilé",
+            "events": "Àwọn Ìṣẹ̀lẹ̀",
+            "calendar": "Kàlẹ́ndà",
+            "login": "Wọlé",
+            "register": "Forúkọ Sílẹ̀",
+            "profile": "Àkọsílẹ̀ Mi",
+            "savedEvents": "Àwọn Ìṣẹ̀lẹ̀ Tí A Pamọ́",
+            "myEvents": "Àwọn Ìṣẹ̀lẹ̀ Mi",
+            "createEvent": "Ṣẹ̀dá Ìṣẹ̀lẹ̀",
+            "adminDashboard": "Pánẹ́ẹ̀lì Alákòóso",
+            "logout": "Jáde",
+            "notifications": "Àwọn Ìkìlọ̀"
+        },
+        "home": {
+            "hero": {
+                "title": "Ṣàwárí Àwọn Ìṣẹ̀lẹ̀ Ilé-Ẹ̀kọ́",
+                "subtitle": "Wá àwọn ìṣẹ̀lẹ̀ tó dára jù tó ń ṣẹlẹ̀ ní ilé-ẹ̀kọ́",
+                "browseEvents": "Wo Àwọn Ìṣẹ̀lẹ̀",
+                "viewCalendar": "Wo Kàlẹ́ndà"
+            },
+            "upcomingEvents": "Àwọn Ìṣẹ̀lẹ̀ Tó Ń Bọ̀",
+            "viewAll": "Wo Gbogbo Rẹ̀"
+        },
+        "events": {
+            "title": "Wo Àwọn Ìṣẹ̀lẹ̀",
+            "search": "Wá àwọn ìṣẹ̀lẹ̀...",
+            "searchPlaceholder": "Wá nípasẹ̀ àkọlé tàbí àlàyé...",
+            "allCategories": "Gbogbo Ẹ̀ka",
+            "noEvents": "Kò rí ìṣẹ̀lẹ̀ kankan",
+            "register": "Forúkọ Sílẹ̀",
+            "registerNow": "FORÚKỌ SÍLẸ̀ BÁYÌÍ",
+            "registered": "Ti Forúkọ Sílẹ̀",
+            "unregister": "Fagilee Ìforúkọsílẹ̀",
+            "save": "Pamọ́ Ìṣẹ̀lẹ̀",
+            "unsave": "Mú Kúrò",
+            "saved": "Ti Pamọ́",
+            "full": "Ìṣẹ̀lẹ̀ Ti Kún",
+            "spotsLeft": "{{count}} ibi tó kù",
+            "unlimited": "Àìlópin ibi",
+            "create": "Ṣẹ̀dá Ìṣẹ̀lẹ̀",
+            "edit": "Ṣàtúnṣe Ìṣẹ̀lẹ̀",
+            "delete": "Pa Ìṣẹ̀lẹ̀ Rẹ́",
+            "confirmDelete": "Ǹjẹ́ o dá ọ lójú pé o fẹ́ pa ìṣẹ̀lẹ̀ yìí rẹ́?",
+            "status": {
+                "draft": "Àkọ̀kọ́",
+                "published": "Ti Tẹ̀jáde",
+                "cancelled": "Ti Fagilee",
+                "completed": "Ti Parí"
+            }
+        },
+        "eventForm": {
+            "title": "Àkọlé",
+            "description": "Àlàyé",
+            "category": "Ẹ̀ka",
+            "venue": "Ibùdó",
+            "startDate": "Ọjọ́ Ìbẹ̀rẹ̀ & Àkókò",
+            "endDate": "Ọjọ́ Ìparí & Àkókò",
+            "maxAttendees": "Iye Tó Pọ̀ Jù (0 fún àìlópin)",
+            "status": "Ipò",
+            "submit": "Pamọ́ Ìṣẹ̀lẹ̀",
+            "cancel": "Fagilee"
+        },
+        "auth": {
+            "login": {
+                "title": "Wọlé",
+                "email": "Ímeèlì",
+                "password": "Ọ̀rọ̀ Aṣínà",
+                "rememberMe": "Rántí mi",
+                "submit": "Wọlé",
+                "noAccount": "Ò ní àkáǹtì?",
+                "register": "Forúkọ sílẹ̀ níbí"
+            },
+            "register": {
+                "title": "Ṣẹ̀dá Àkáǹtì",
+                "fullName": "Orúkọ Ní Kíkún",
+                "email": "Ímeèlì",
+                "phone": "Nọ́mbà Fóònù",
+                "password": "Ọ̀rọ̀ Aṣínà",
+                "confirmPassword": "Ṣe Ìdánilójú Ọ̀rọ̀ Aṣínà",
+                "matricNumber": "Nọ́mbà Ìwé",
+                "department": "Ẹ̀ka",
+                "selectDepartment": "-- Yan Ẹ̀ka --",
+                "preferredLanguage": "Èdè Tí O Fẹ́ràn",
+                "submit": "Forúkọ Sílẹ̀",
+                "hasAccount": "O ní àkáǹtì?",
+                "login": "Wọlé níbí"
+            },
+            "profile": {
+                "title": "Àkọsílẹ̀ Mi",
+                "update": "Ṣe Ìmúdójúìwọ̀n Àkọsílẹ̀",
+                "staffId": "Nọ́mbà Oṣìṣẹ́",
+                "changePassword": "Yí Ọ̀rọ̀ Aṣínà Padà",
+                "currentPassword": "Ọ̀rọ̀ Aṣínà Lọ́wọ́lọ́wọ́",
+                "newPassword": "Ọ̀rọ̀ Aṣínà Tuntun",
+                "confirmNewPassword": "Ṣe Ìdánilójú Ọ̀rọ̀ Aṣínà Tuntun",
+                "upcomingRegistrations": "Àwọn Ìforúkọsílẹ̀ Tó Ń Bọ̀"
+            }
+        },
+        "admin": {
+            "dashboard": "Pánẹ́ẹ̀lì Alákòóso",
+            "users": "Àwọn Olùmúlò",
+            "events": "Àwọn Ìṣẹ̀lẹ̀",
+            "categories": "Àwọn Ẹ̀ka",
+            "departments": "Àwọn Ẹ̀ka Iṣẹ́",
+            "registrations": "Àwọn Ìforúkọsílẹ̀",
+            "stats": {
+                "totalUsers": "Àpapọ̀ Olùmúlò",
+                "totalEvents": "Àpapọ̀ Ìṣẹ̀lẹ̀",
+                "totalRegistrations": "Àpapọ̀ Ìforúkọsílẹ̀",
+                "upcomingEvents": "Àwọn Ìṣẹ̀lẹ̀ Tó Ń Bọ̀"
+            }
+        },
+        "calendar": {
+            "title": "Kàlẹ́ndà Ìṣẹ̀lẹ̀"
+        },
+        "about": {
+            "title": "Nípa Wa"
+        },
+        "footer": {
+            "quickLinks": "Àwọn Ìjápọ̀ Kíákíá",
+            "browseEvents": "Wo Àwọn Ìṣẹ̀lẹ̀",
+            "contact": "Kàn Sí Wa",
+            "rights": "Gbogbo ẹ̀tọ́ wa ní ìpamọ́.",
+            "terms": "Àwọn Ìlànà Ìṣẹ́",
+            "privacy": "Ìlànà Ìkọ̀kọ̀"
+        },
+        "terms": {
+            "title": "Àwọn Ìlànà Ìṣẹ́"
+        },
+        "privacy": {
+            "title": "Ìlànà Ìkọ̀kọ̀"
+        },
+        "common": {
+            "all": "Gbogbo",
+            "loading": "Ń gbéga...",
+            "error": "Àṣìṣe kan ṣẹlẹ̀",
+            "success": "Àṣeyọrí!",
+            "save": "Pamọ́",
+            "cancel": "Fagilee",
+            "delete": "Pa Rẹ́",
+            "edit": "Ṣàtúnṣe",
+            "view": "Wo",
+            "back": "Padà",
+            "submit": "Firánṣẹ́"
+        },
+        "errors": {
+            "notFound": "Kò Rí Ojú-Ìwé",
+            "notFoundMessage": "Ojú-ìwé tí o ń wá kò sí.",
+            "goHome": "Lọ Sí Ilé"
+        },
+        "messages": {
+            "loginSuccess": "Ẹ kú àbọ̀, {{name}}!",
+            "logoutSuccess": "O ti jáde.",
+            "registerSuccess": "Ìforúkọsílẹ̀ ti yọrí sí! Jọ̀wọ́ wọlé.",
+            "profileUpdated": "A ti ṣe ìmúdójúìwọ̀n àkọsílẹ̀ rẹ.",
+            "passwordChanged": "A ti yí ọ̀rọ̀ aṣínà rẹ padà.",
+            "eventCreated": "A ti ṣẹ̀dá ìṣẹ̀lẹ̀ ní àṣeyọrí!",
+            "eventUpdated": "A ti ṣe ìmúdójúìwọ̀n ìṣẹ̀lẹ̀ ní àṣeyọrí!",
+            "eventDeleted": "A ti pa ìṣẹ̀lẹ̀ rẹ́ ní àṣeyọrí.",
+            "registeredForEvent": "A ti forúkọ rẹ sílẹ̀ fún ìṣẹ̀lẹ̀ yìí!",
+            "registeredSuccessfully": "A ti forúkọ rẹ sílẹ̀ fún ìṣẹ̀lẹ̀ yìí ní àṣeyọrí!",
+            "unregisteredFromEvent": "A ti fagilee ìforúkọsílẹ̀ rẹ.",
+            "eventSaved": "A ti pamọ́ ìṣẹ̀lẹ̀!",
+            "eventUnsaved": "A ti mú ìṣẹ̀lẹ̀ kúrò nínú àwọn tí a pamọ́."
+        }
+    }
+}

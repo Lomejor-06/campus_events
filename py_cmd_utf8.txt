@@ -1,0 +1,2 @@
+﻿c:\Users\USER\Documents\fegz\.venv\Scripts\python.exe c:\Users\USER\.antigravity\extensions\ms-python.python-2026.4.0-universal\python_files\run-jedi-language-server.py
+C:\Users\USER\AppData\Local\Programs\Python\Python39\python.exe c:\Users\USER\.antigravity\extensions\ms-python.python-2026.4.0-universal\python_files\run-jedi-language-server.py
