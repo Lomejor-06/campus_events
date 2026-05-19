@@ -38,6 +38,8 @@ export interface AuthResponse {
     message: string;
 }
 
+let isRegistering = false;
+
 const authService = {
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -76,72 +78,77 @@ const authService = {
 
     async register(data: RegisterData): Promise<AuthResponse> {
         console.log('[REGISTER] Starting registration for:', data.email);
+        isRegistering = true;
 
-        const { data: authData, error } = await supabase.auth.signUp({
-            email: data.email,
-            password: data.password,
-        });
+        try {
+            const { data: authData, error } = await supabase.auth.signUp({
+                email: data.email,
+                password: data.password,
+            });
 
-        console.log('[REGISTER] SignUp result:', { userId: authData?.user?.id, error: error?.message, identities: authData?.user?.identities?.length });
+            console.log('[REGISTER] SignUp result:', { userId: authData?.user?.id, error: error?.message, identities: authData?.user?.identities?.length });
 
-        if (error) {
-            console.error('[REGISTER] SignUp error:', error);
-            throw error;
-        }
-        if (!authData.user) throw new Error('Registration failed');
+            if (error) {
+                console.error('[REGISTER] SignUp error:', error);
+                throw error;
+            }
+            if (!authData.user) throw new Error('Registration failed');
 
-        // Supabase returns a fake success with empty identities for existing users
-        if (authData.user.identities && authData.user.identities.length === 0) {
-            console.warn('[REGISTER] User already exists (empty identities)');
-            throw new Error('An account with this email already exists. Please log in instead.');
-        }
+            // Supabase returns a fake success with empty identities for existing users
+            if (authData.user.identities && authData.user.identities.length === 0) {
+                console.warn('[REGISTER] User already exists (empty identities)');
+                throw new Error('An account with this email already exists. Please log in instead.');
+            }
 
-        const isPendingLecturer = data.role === 'pending_lecturer';
+            const isPendingLecturer = data.role === 'pending_lecturer';
 
-        const newUser: Record<string, any> = {
-            id: authData.user.id,
-            email: data.email,
-            full_name: data.full_name,
-            role: data.role || 'student',
-            phone: data.phone || null,
-            preferred_language: data.preferred_language || 'en',
-            is_active: !isPendingLecturer,
-        };
-
-        // Only include optional fields if they have values
-        if (data.matric_number) newUser.matric_number = data.matric_number;
-        if (data.staff_id) newUser.staff_id = data.staff_id;
-        if (data.department_id) newUser.department_id = data.department_id;
-
-        console.log('[REGISTER] Inserting profile:', newUser);
-
-        const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .insert([newUser])
-            .select()
-            .single();
-
-        console.log('[REGISTER] Profile insert result:', { profile: !!profile, error: profileError });
-
-        if (profileError) {
-            console.error('[REGISTER] Profile insert error:', profileError);
-            throw new Error(profileError.message || 'Failed to create user profile. Please check database migration.');
-        }
-
-        const userData = profile as User;
-
-        if (isPendingLecturer) {
-            // Sign out pending lecturers - they can't use the app until approved
-            await supabase.auth.signOut();
-            return { 
-                user: userData, 
-                message: 'Your lecturer account has been submitted for approval. You will be able to log in once an administrator approves your account.' 
+            const newUser: Record<string, any> = {
+                id: authData.user.id,
+                email: data.email,
+                full_name: data.full_name,
+                role: data.role || 'student',
+                phone: data.phone || null,
+                preferred_language: data.preferred_language || 'en',
+                is_active: !isPendingLecturer,
             };
-        }
 
-        console.log('[REGISTER] Success! Storing user data');
-        localStorage.setItem('user', JSON.stringify(userData));
-        return { user: userData, message: 'Registered successfully' };
+            // Only include optional fields if they have values
+            if (data.matric_number) newUser.matric_number = data.matric_number;
+            if (data.staff_id) newUser.staff_id = data.staff_id;
+            if (data.department_id) newUser.department_id = data.department_id;
+
+            console.log('[REGISTER] Inserting profile:', newUser);
+
+            const { data: profile, error: profileError } = await supabase
+                .from('profiles')
+                .insert([newUser])
+                .select()
+                .single();
+
+            console.log('[REGISTER] Profile insert result:', { profile: !!profile, error: profileError });
+
+            if (profileError) {
+                console.error('[REGISTER] Profile insert error:', profileError);
+                throw new Error(profileError.message || 'Failed to create user profile. Please check database migration.');
+            }
+
+            const userData = profile as User;
+
+            if (isPendingLecturer) {
+                // Sign out pending lecturers - they can't use the app until approved
+                await supabase.auth.signOut();
+                return { 
+                    user: userData, 
+                    message: 'Your lecturer account has been submitted for approval. You will be able to log in once an administrator approves your account.' 
+                };
+            }
+
+            console.log('[REGISTER] Success! Storing user data');
+            localStorage.setItem('user', JSON.stringify(userData));
+            return { user: userData, message: 'Registered successfully' };
+        } finally {
+            isRegistering = false;
+        }
     },
 
     async logout(): Promise<void> {
@@ -190,6 +197,10 @@ const authService = {
 
     onAuthChange(callback: (user: User | null) => void) {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            // Skip profile fetch if registration is in progress. The register function will handle setting the profile.
+            if (isRegistering) {
+                return;
+            }
             // Use non-async callback to prevent blocking signUp/signIn resolution
             if (session?.user) {
                 // Fire-and-forget async profile fetch
