@@ -161,6 +161,18 @@ const Navbar: React.FC = () => {
                                                 </li>
                                             </>
                                         )}
+
+                                        {isAdmin() && (
+                                            <>
+                                                <li><hr className="dropdown-divider opacity-50" /></li>
+                                                <li>
+                                                    <Link className="dropdown-item rounded-2 text-danger fw-bold" to="/admin" data-bs-dismiss="dropdown" onClick={closeMenu}>
+                                                        <i className="bi bi-shield-lock-fill me-2"></i>
+                                                        Admin Dashboard
+                                                    </Link>
+                                                </li>
+                                            </>
+                                        )}
                                         
 
                                         

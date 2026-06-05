@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
-// import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import authService, { type User } from '../../services/authService';
 
 const AdminUsers: React.FC = () => {
     const { t } = useTranslation();
-    // const { user: currentUser } = useAuth(); // unused
+    const { isAdmin, isLoading: authLoading } = useAuth();
 
-    // Redirect to /admin if not admin-authenticated via password gate
-    const isAdminAuthenticated = sessionStorage.getItem('admin_authenticated') === 'true';
-    if (!isAdminAuthenticated) {
-        return <Navigate to="/admin" replace />;
-    }
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [pendingLecturers, setPendingLecturers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
@@ -43,8 +38,25 @@ const AdminUsers: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchUsers();
-    }, []);
+        if (!authLoading && isAdmin()) {
+            fetchUsers();
+        }
+    }, [authLoading]);
+
+    // Auth guard — must be after all hooks
+    if (authLoading) {
+        return (
+            <div className="text-center py-5 my-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">{t('common.loading')}</span>
+                </div>
+            </div>
+        );
+    }
+
+    if (!isAdmin()) {
+        return <Navigate to="/login" replace />;
+    }
 
     const handleApproveLecturer = async (userId: string, userName: string) => {
         setActionLoading(userId);

@@ -137,6 +137,10 @@ const authService = {
             if (isPendingLecturer) {
                 // Sign out pending lecturers - they can't use the app until approved
                 await supabase.auth.signOut();
+                // Notify all admins about the new pending lecturer
+                this.notifyAdminsOfPendingLecturer(data.full_name, data.email).catch(err => {
+                    console.error('[REGISTER] Failed to notify admins:', err);
+                });
                 return { 
                     user: userData, 
                     message: 'Your lecturer account has been submitted for approval. You will be able to log in once an administrator approves your account.' 
@@ -154,7 +158,6 @@ const authService = {
     async logout(): Promise<void> {
         await supabase.auth.signOut();
         localStorage.removeItem('user');
-        sessionStorage.removeItem('admin_authenticated');
     },
 
     async getProfile(uid: string): Promise<User> {
@@ -324,6 +327,9 @@ const authService = {
     },
 
     async addAdmin(email: string, password: string, fullName: string): Promise<void> {
+        // Store the current session so we can restore it after creating the new user
+        const { data: currentSession } = await supabase.auth.getSession();
+
         // Create the auth user via Supabase signup
         const { data: authData, error: signUpError } = await supabase.auth.signUp({
             email,
@@ -347,6 +353,14 @@ const authService = {
             }]);
 
         if (profileError) throw profileError;
+
+        // Restore the original admin session if it was disrupted
+        if (currentSession?.session) {
+            await supabase.auth.setSession({
+                access_token: currentSession.session.access_token,
+                refresh_token: currentSession.session.refresh_token,
+            });
+        }
     },
 
     async setSuperadmin(uid: string): Promise<void> {
@@ -356,6 +370,40 @@ const authService = {
             .eq('id', uid);
         
         if (error) throw error;
+    },
+
+    async notifyAdminsOfPendingLecturer(lecturerName: string, lecturerEmail: string): Promise<void> {
+        try {
+            // Fetch all admin users
+            const { data: admins, error: adminError } = await supabase
+                .from('profiles')
+                .select('id')
+                .eq('role', 'admin');
+
+            if (adminError || !admins || admins.length === 0) {
+                console.warn('[NOTIFY] No admins found to notify');
+                return;
+            }
+
+            // Create a notification for each admin
+            const notifications = admins.map(admin => ({
+                user_id: admin.id,
+                title: 'New Lecturer Pending Approval',
+                message: `${lecturerName} (${lecturerEmail}) has registered as a lecturer and is awaiting your approval.`,
+                event_id: null,
+                read: false,
+            }));
+
+            const { error: insertError } = await supabase
+                .from('notifications')
+                .insert(notifications);
+
+            if (insertError) {
+                console.error('[NOTIFY] Failed to insert admin notifications:', insertError);
+            }
+        } catch (err) {
+            console.error('[NOTIFY] Error notifying admins:', err);
+        }
     },
 };
 

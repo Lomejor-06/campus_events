@@ -157,43 +157,54 @@ const Register: React.FC = () => {
                         <div className="row g-3">
                             <div className="col-6">
                                 <div 
-                                    className={`portal-card p-4 text-center cursor-pointer transition-all ${selectedRole === 'student' ? 'border-primary border-2 bg-primary bg-opacity-5 shadow-sm' : 'bg-light border-0'}`}
+                                    className={`role-selector-card portal-card p-4 text-center ${selectedRole === 'student' ? 'role-selector-active role-selector-student' : 'bg-light border-0'}`}
                                     onClick={() => setSelectedRole('student')}
-                                    style={{ cursor: 'pointer' }}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => e.key === 'Enter' && setSelectedRole('student')}
+                                    aria-pressed={selectedRole === 'student'}
                                 >
-                                    <i className={`bi bi-mortarboard-fill display-6 d-block mb-2 ${selectedRole === 'student' ? 'text-primary' : 'text-muted'}`}></i>
-                                    <h6 className={`fw-800 mb-1 ${selectedRole === 'student' ? 'text-primary' : 'text-muted'}`}>STUDENT</h6>
-                                    <small className="text-muted" style={{ fontSize: '0.7rem' }}>Access events & activities</small>
-                                    {selectedRole === 'student' && (
-                                        <div className="mt-2">
-                                            <span className="badge bg-primary rounded-pill px-3"><i className="bi bi-check-lg"></i></span>
-                                        </div>
-                                    )}
+                                    <div className={`role-selector-icon mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle ${selectedRole === 'student' ? 'bg-primary bg-opacity-15' : 'bg-white'}`} style={{ width: '72px', height: '72px' }}>
+                                        <i className={`bi bi-mortarboard-fill display-5 ${selectedRole === 'student' ? 'text-primary' : 'text-muted'}`}></i>
+                                    </div>
+                                    <h5 className={`fw-800 mb-1 ${selectedRole === 'student' ? 'text-primary' : 'text-muted'}`}>STUDENT</h5>
+                                    <p className="text-muted mb-2" style={{ fontSize: '0.8rem' }}>Access events, register for activities & manage your campus life</p>
+                                    <div className={`role-selector-badge ${selectedRole === 'student' ? 'role-selector-badge-visible' : ''}`}>
+                                        <span className="badge bg-primary rounded-pill px-3 py-2 shadow-sm">
+                                            <i className="bi bi-check-lg me-1"></i> Selected
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="col-6">
                                 <div 
-                                    className={`portal-card p-4 text-center cursor-pointer transition-all ${selectedRole === 'pending_lecturer' ? 'border-primary border-2 bg-primary bg-opacity-5 shadow-sm' : 'bg-light border-0'}`}
+                                    className={`role-selector-card portal-card p-4 text-center ${selectedRole === 'pending_lecturer' ? 'role-selector-active role-selector-lecturer' : 'bg-light border-0'}`}
                                     onClick={() => setSelectedRole('pending_lecturer')}
-                                    style={{ cursor: 'pointer' }}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => e.key === 'Enter' && setSelectedRole('pending_lecturer')}
+                                    aria-pressed={selectedRole === 'pending_lecturer'}
                                 >
-                                    <i className={`bi bi-person-workspace display-6 d-block mb-2 ${selectedRole === 'pending_lecturer' ? 'text-primary' : 'text-muted'}`}></i>
-                                    <h6 className={`fw-800 mb-1 ${selectedRole === 'pending_lecturer' ? 'text-primary' : 'text-muted'}`}>LECTURER</h6>
-                                    <small className="text-muted" style={{ fontSize: '0.7rem' }}>Create & manage events</small>
-                                    {selectedRole === 'pending_lecturer' && (
-                                        <div className="mt-2">
-                                            <span className="badge bg-primary rounded-pill px-3"><i className="bi bi-check-lg"></i></span>
-                                        </div>
-                                    )}
+                                    <div className={`role-selector-icon mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle ${selectedRole === 'pending_lecturer' ? 'bg-warning bg-opacity-15' : 'bg-white'}`} style={{ width: '72px', height: '72px' }}>
+                                        <i className={`bi bi-person-workspace display-5 ${selectedRole === 'pending_lecturer' ? 'text-warning' : 'text-muted'}`}></i>
+                                    </div>
+                                    <h5 className={`fw-800 mb-1 ${selectedRole === 'pending_lecturer' ? 'text-warning' : 'text-muted'}`}>LECTURER</h5>
+                                    <p className="text-muted mb-2" style={{ fontSize: '0.8rem' }}>Create & manage campus events, track student registrations</p>
+                                    <div className={`role-selector-badge ${selectedRole === 'pending_lecturer' ? 'role-selector-badge-visible' : ''}`}>
+                                        <span className="badge bg-warning text-dark rounded-pill px-3 py-2 shadow-sm">
+                                            <i className="bi bi-check-lg me-1"></i> Selected
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {selectedRole === 'pending_lecturer' && (
-                            <div className="alert alert-warning border-0 bg-warning bg-opacity-10 mt-3 rounded-3 py-2 px-3">
-                                <small className="fw-bold">
-                                    <i className="bi bi-info-circle me-1"></i>
-                                    Lecturer accounts require admin approval before activation.
-                                </small>
+                            <div className="alert alert-warning border-0 bg-warning bg-opacity-10 mt-3 rounded-3 py-3 px-4 d-flex align-items-center gap-3">
+                                <i className="bi bi-info-circle-fill text-warning fs-5"></i>
+                                <div>
+                                    <strong className="d-block mb-1">Admin Approval Required</strong>
+                                    <small className="text-muted">Lecturer accounts must be reviewed and approved by an administrator before activation. You will be notified once approved.</small>
+                                </div>
                             </div>
                         )}
                     </div>

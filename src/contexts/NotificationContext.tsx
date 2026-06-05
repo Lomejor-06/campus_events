@@ -26,6 +26,9 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     useEffect(() => {
         if (isAuthenticated) {
             fetchUnreadCount();
+            // Poll every 30 seconds for new notifications
+            const interval = setInterval(fetchUnreadCount, 30000);
+            return () => clearInterval(interval);
         } else {
             setUnreadCount(0);
         }

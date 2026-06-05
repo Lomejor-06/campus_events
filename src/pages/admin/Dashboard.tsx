@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabaseClient';
 import authService from '../../services/authService';
 
@@ -14,13 +15,17 @@ interface Stats {
 
 const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
+    const { isAdmin, isLoading: authLoading, logout } = useAuth();
+    const navigate = useNavigate();
     const [stats, setStats] = useState<Stats | null>(null);
     const [loading, setLoading] = useState(true);
-    const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => sessionStorage.getItem('admin_authenticated') === 'true');
-
 
     useEffect(() => {
-        if (!isAdminAuthenticated) return;
+        if (authLoading) return;
+        if (!isAdmin()) {
+            setLoading(false);
+            return;
+        }
 
         const fetchStats = async () => {
             try {
@@ -54,10 +59,20 @@ const AdminDashboard: React.FC = () => {
             }
         };
         fetchStats();
-    }, [isAdminAuthenticated]);
+    }, [authLoading]);
 
     // ── Admin Gate ──
-    if (!isAdminAuthenticated) {
+    if (authLoading) {
+        return (
+            <div className="text-center py-5 my-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">{t('common.loading')}</span>
+                </div>
+            </div>
+        );
+    }
+
+    if (!isAdmin()) {
         return <Navigate to="/login" replace />;
     }
 
@@ -103,10 +118,9 @@ const AdminDashboard: React.FC = () => {
         },
     ];
 
-    const handleLogoutAdmin = () => {
-        sessionStorage.removeItem('admin_authenticated');
-        setIsAdminAuthenticated(false);
-        window.location.href = '/login';
+    const handleLogoutAdmin = async () => {
+        await logout();
+        navigate('/login');
     };
 
     return (

@@ -38,14 +38,15 @@ const Login: React.FC = () => {
         setLoading(true);
 
         try {
-            if (formData.email.trim() === 'adminlaspo' && formData.password === 'eventadmin') {
-                sessionStorage.setItem('admin_authenticated', 'true');
-                navigate('/admin', { replace: true });
-                return;
-            }
-
             await login(formData);
-            navigate(from, { replace: true });
+            // Check if the logged-in user is an admin and redirect accordingly
+            const cached = localStorage.getItem('user');
+            const loggedInUser = cached ? JSON.parse(cached) : null;
+            if (loggedInUser?.role === 'admin') {
+                navigate('/admin', { replace: true });
+            } else {
+                navigate(from, { replace: true });
+            }
         } catch (err: any) {
             console.error('Login error:', err);
             let message = t('common.error');
@@ -93,14 +94,14 @@ const Login: React.FC = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label htmlFor="email" className="form-label fw-bold small text-uppercase text-muted">
-                                Email / Admin Username
+                                {t('auth.login.email')}
                             </label>
                             <div className="input-group">
                                 <span className="input-group-text bg-light border-0 ps-3">
                                     <i className="bi bi-person text-muted"></i>
                                 </span>
                                 <input
-                                    type="text"
+                                    type="email"
                                     className="form-control form-control-lg bg-light border-0 py-3 rounded-end-4"
                                     id="email"
                                     name="email"

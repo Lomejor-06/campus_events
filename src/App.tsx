@@ -96,9 +96,23 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* Admin Routes - standalone username/password gate inside components */}
-              <Route path="admin" element={<AdminDashboard />} />
-              <Route path="admin/users" element={<AdminUsers />} />
+              {/* Admin Routes */}
+              <Route
+                path="admin"
+                element={
+                  <ProtectedRoute requireAdmin>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/users"
+                element={
+                  <ProtectedRoute requireAdmin>
+                    <AdminUsers />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

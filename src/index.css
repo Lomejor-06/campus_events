@@ -185,3 +185,54 @@ body {
     border-bottom: 1px solid var(--border-color);
     background-color: #fff;
 }
+
+/* Role Selector Cards */
+.role-selector-card {
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.role-selector-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.role-selector-card:hover .role-selector-icon {
+    transform: scale(1.1);
+}
+
+.role-selector-icon {
+    transition: transform 0.25s ease;
+}
+
+.role-selector-active.role-selector-student {
+    border-color: var(--primary) !important;
+    background: rgba(30, 58, 138, 0.04) !important;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.15);
+}
+
+.role-selector-active.role-selector-lecturer {
+    border-color: #d97706 !important;
+    background: rgba(217, 119, 6, 0.04) !important;
+    box-shadow: 0 4px 15px rgba(217, 119, 6, 0.15);
+}
+
+.role-selector-badge {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.role-selector-badge-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Transition Utility */
+.transition-hover {
+    transition: all 0.2s ease;
+}
