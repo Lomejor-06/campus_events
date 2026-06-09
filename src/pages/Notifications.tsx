@@ -15,7 +15,7 @@ const Notifications: React.FC = () => {
 
     useEffect(() => {
         if (user) {
-            loadNotifications();
+            loadNotifications(); 
         }
     }, [user]);
 

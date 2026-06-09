@@ -5,6 +5,7 @@ import { NotificationProvider } from './contexts/NotificationContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
+import NotificationToastContainer from './components/NotificationToastContainer';
 
 // Pages
 import Home from './pages/Home';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
       <NotificationProvider>
         <BrowserRouter>
           <ScrollToTop />
+          <NotificationToastContainer />
           <Routes>
             <Route path="/" element={<Layout />}>
               {/* Public Routes */}
